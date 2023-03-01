@@ -20,8 +20,8 @@ public class Shipment {
 	private String shipmentId;
 	@OneToOne
 	private ShipmentStatus shipmentStatus;
-	@OneToOne
-	private ShipmentStage shipmentStage;
+	@OneToMany
+	private List<ShipmentStage> shipmentStages;
 	private String shipmentDate;
 	private String deliveryDate;
 	private String shipmentMode;
@@ -41,25 +41,17 @@ public class Shipment {
 	private String senderPhone;
 	private String senderEmail;
 
-	
-	
 	public String getShipmentId() {
 		return shipmentId;
 	}
-	
-	
 
 	public String getReferenceCode() {
 		return referenceCode;
 	}
 
-
-
 	public void setReferenceCode(String referenceCode) {
 		this.referenceCode = referenceCode;
 	}
-
-
 
 	public void setShipmentId(String shipmentId) {
 		this.shipmentId = shipmentId;
@@ -73,16 +65,12 @@ public class Shipment {
 		this.shipmentStatus = shipmentStatus;
 	}
 
-	
-
-	
-
-	public ShipmentStage getShipmentStage() {
-		return shipmentStage;
+	public List<ShipmentStage> getShipmentStages() {
+		return shipmentStages;
 	}
 
-	public void setShipmentStage(ShipmentStage shipmentStage) {
-		this.shipmentStage = shipmentStage;
+	public void setShipmentStages(List<ShipmentStage> shipmentStages) {
+		this.shipmentStages = shipmentStages;
 	}
 
 	public String getShipmentDate() {
@@ -165,19 +153,13 @@ public class Shipment {
 		this.receiverName = receiverName;
 	}
 
-	
-
 	public String getReceiverAddress() {
 		return receiverAddress;
 	}
 
-
-
 	public void setReceiverAddress(String receiverAddress) {
 		this.receiverAddress = receiverAddress;
 	}
-
-
 
 	public String getReceiverPhone() {
 		return receiverPhone;
@@ -195,32 +177,20 @@ public class Shipment {
 		this.receiverEmail = receiverEmail;
 	}
 
-
-
 	public String getSenderPhone() {
 		return senderPhone;
 	}
-
-
 
 	public void setSenderPhone(String senderPhone) {
 		this.senderPhone = senderPhone;
 	}
 
-
-
 	public String getSenderEmail() {
 		return senderEmail;
 	}
 
-
-
 	public void setSenderEmail(String senderEmail) {
 		this.senderEmail = senderEmail;
 	}
-	
-	
-	
-	
 
 }

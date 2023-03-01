@@ -24,7 +24,7 @@ public class ShipmentController {
 	@CrossOrigin(maxAge = 3600)
 	@RequestMapping(method = RequestMethod.POST, value = "/shipment")
 	public Shipment addShipment(@RequestBody Shipment shipment) {
-		String shipmentId = "FFP" + new Random().nextInt(100000) + "LX";
+		String shipmentId = "FP" + new Random().nextInt(100000) + "LX";
 		shipment.setShipmentId(shipmentId);
 		System.out.println(shipmentId);
 		return shipmentService.addShipment(shipment);
@@ -42,11 +42,11 @@ public class ShipmentController {
 		return shipmentService.getShipments();
 	}
 
-	@CrossOrigin(maxAge = 3600)
-	@RequestMapping("/shipment/stage/{shipmentStage}")
-	public List<Shipment> getShipmentByShipmentStage(@PathVariable String shipmentStage) {
-		return shipmentService.getShipmentByShipmentStage(shipmentStage);
-	}
+//	@CrossOrigin(maxAge = 3600)
+//	@RequestMapping("/shipment/stage/{shipmentStage}")
+//	public List<Shipment> getShipmentByShipmentStage(@PathVariable String shipmentStage) {
+//		return shipmentService.getShipmentByShipmentStage(shipmentStage);
+//	}
 
 	@CrossOrigin(maxAge = 3600)
 	@RequestMapping(method = RequestMethod.DELETE, value = "/shipment/{shipmentId}/delete")

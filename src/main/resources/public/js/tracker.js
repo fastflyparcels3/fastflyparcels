@@ -14,7 +14,7 @@ function getShipment(shipmentId) {
 
       if (response == null) {
         document.getElementById("tracking-no").textContent = shipmentId;
-        document.getElementById("status").textContent = "INVALID"
+        document.getElementById("status").textContent = "INVALID";
         invalidShipmentId();
       } else {
         if (response.senderPhone == null || response.senderPhone == "") {
@@ -27,12 +27,20 @@ function getShipment(shipmentId) {
             "none";
         }
 
+        let status = "check";
+        response.shipmentStages.forEach(function (item, index) {
+          if (index == response.shipmentStages.length - 1) {
+            status = "local_shipping";
+          }
+          document.getElementById("shipment-stage-root").innerHTML +=
+            bindShipmentStage(item, status);
+        });
+
         document.getElementById("sender-phone-number").textContent =
           response.senderPhone;
         document.getElementById("sender-email").textContent =
           response.senderEmail;
 
-          console.log("Sender phone", response.senderPhone);
         document.getElementById("tracking-no").textContent =
           response.shipmentId;
         document.getElementById("status").textContent =
@@ -66,19 +74,6 @@ function getShipment(shipmentId) {
         document.getElementById("service-type").textContent =
           response.serviceType;
 
-        let shipmentStage;
-        if (response.shipmentStage.shipmentStageId == 1) {
-          shipmentStage = "received";
-        } else if (response.shipmentStage.shipmentStageId == 2) {
-          shipmentStage = "dispatched";
-        } else if (response.shipmentStage.shipmentStageId == 3) {
-          shipmentStage = "middle";
-        } else if (response.shipmentStage.shipmentStageId == 4) {
-          shipmentStage = "delivered";
-        }
-
-        changeStage(document.getElementById(shipmentStage));
-
         getShipmentHistory(shipmentId);
         setTimeout(function () {
           stopSpinner();
@@ -90,7 +85,11 @@ function getShipment(shipmentId) {
 
 function getShipmentHistory(shipmentId) {
   let shipmentHistoryXhr = new XMLHttpRequest();
-  shipmentHistoryXhr.open("GET", `/shipment/${shipmentId}/histories/`, true);
+  shipmentHistoryXhr.open(
+    "GET",
+    `/shipment/${shipmentId}/histories/`,
+    true
+  );
   shipmentHistoryXhr.send();
 
   shipmentHistoryXhr.onreadystatechange = function () {
@@ -148,21 +147,26 @@ function bindHistories(history) {
             </div>`;
 }
 
-function changeStage(selectedStage) {
-  for (let i = 0; i < orderStages.length; i++) {
-    orderStages[i].children[0].classList.add("text-primary");
-    orderStages[i].children[1].classList.replace(
-      "background-primary-light",
-      "background-primary"
-    );
-    orderStages[i].children[1].children[0].style.display = "none";
-    orderStages[i].children[1].children[1].style.display = "block";
-
-    if (orderStages[i].id == selectedStage.id) {
-      orderStages[i].children[1].children[1].textContent = "local_shipping";
-      break;
-    }
-  }
+function bindShipmentStage(shipmentStage, status) {
+  return `<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+	<div class="background-primary" style="height: 20px; width: 1px;"></div>
+	<p class="small no-margin-2">
+	  ${shipmentStage.shipmentStage}
+	</p>
+	<div class="background-primary" style="
+		height: 30px;
+		width: 30px;
+		border-radius: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	  ">
+	  <span class="small"></span>
+	  <span class="material-symbols-outlined order-stage-icon" style="font-size: 22px; display: block">
+		${status}
+	  </span>
+	</div>
+  </div>`;
 }
 
 function stopSpinner() {
@@ -173,17 +177,15 @@ function stopSpinner() {
 function invalidShipmentId() {
   document.getElementById("spinner").style.display = "none";
   document.getElementById("shipment").style.display = "none";
-  document.getElementById("invalid-shipment").style.display = "block"
+  document.getElementById("invalid-shipment").style.display = "block";
   document.getElementById("content").style.display = "block";
 }
 
-
-document.body.addEventListener("click", function(e) {
+document.body.addEventListener("click", function (e) {
   let targetId = e.target.id;
   if (targetId == "print") {
     window.print();
+  } else if (targetId == "logout") {
+    location.href = "./index.html";
   }
-  else if(targetId == "logout") {
-    location.href = "./index.html"
-  }
-})
+});

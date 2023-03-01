@@ -360,8 +360,8 @@
           <p class="bold no-margin-3 medium">
             Tracking No.: <span id="tracking-no"></span>
           </p>
-          <p class="no-margin-3" style="font-weight: 600; text-transform: uppercase;">
-            <span class="small bold">Status:</span> <span id="status" class="text-primary w3-animate-fading"></span>
+          <p class="no-margin-3" style="text-transform: uppercase;">
+            <span class="small" style="font-weight: 600;">Status:</span> <span id="status" class="text-primary w3-animate-fading small" style="font-weight: 600;"></span>
           </p>
         </div>
         <div id="invalid-shipment" style="display: none;">
@@ -380,89 +380,28 @@
       <div id="shipment" style="padding: 0px 6px;">
         <div class="card w3-padding-32 w3-margin-top w3-margin-bottom"
           style="border-top: 3px solid rgb(14, 26, 143); padding: 0px 12px">
-          <div>
-            <div id="received" class="order-stage 1">
-              <p class="small no-margin-2">Order Received</p>
-              <div class="background-primary-light" style="
+          <div
+              style="width: 20%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <p class="small no-margin-2">
+                  Dispatched
+                </p>
+                <div class="background-primary" style="
                     height: 30px;
                     width: 30px;
                     border-radius: 30px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin-left: 28px;
                   ">
-                <span class="small order-stage-icon notranslate" style="display: block">1</span>
-                <span class="material-symbols-outlined notranslate" style="font-size: 22px; display: none">
-                  check
-                </span>
+                  <span class="small order-stage-icon"></span>
+                  <span class="material-symbols-outlined" style="font-size: 22px; display: block">
+                    check
+                  </span>
+                </div>
               </div>
-
-              <div class="background-primary order-stage-icon 2" style="height: 20px; width: 1px; margin-left: 42px">
-              </div>
+              <div id="shipment-stage-root"></div>
             </div>
-            <div id="dispatched" class="order-stage">
-              <p class="small no-margin-2" style="margin-left: 12px">
-                Dispatched
-              </p>
-              <div class="background-primary-light" style="
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-left: 28px;
-                  ">
-                <span class="small order-stage-icon notranslate">2</span>
-                <span class="material-symbols-outlined notranslate" style="font-size: 22px; display: none">
-                  check
-                </span>
-              </div>
-
-              <div class="background-primary" style="height: 20px; width: 1px; margin-left: 42px"></div>
-            </div>
-
-            <div id="middle" class="order-stage">
-              <p class="small no-margin-2" style="margin-left: 10px">
-                Middle stage
-              </p>
-              <div class="background-primary-light" style="
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-left: 28px;
-                  ">
-                <span class="small order-stage-icon notranslate">3</span>
-                <span class="material-symbols-outlined notranslate" style="font-size: 22px; display: none">
-                  check
-                </span>
-              </div>
-              <div class="background-primary" style="height: 20px; width: 1px; margin-left: 42px"></div>
-            </div>
-            <div id="delivered" class="order-stage 4">
-              <p class="small no-margin-2" style="margin-left: 16px">
-                Delivered
-              </p>
-              <div class="background-primary-light" style="
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-left: 28px;
-                  ">
-                <span class="small order-stage-icon notranslate">4</span>
-                <span class="material-symbols-outlined notranslate" style="font-size: 22px; display: none">
-                  check
-                </span>
-              </div>
-            </div>
-          </div>
           <div class="small" style="margin-top: 32px">
             <div class="w3-border-bottom w3-margin-top">
               <p class="no-margin-3 bold">
@@ -472,17 +411,17 @@
             </div>
             <div class="w3-border-bottom w3-margin-top">
               <p class="no-margin-3 bold">
-                Shipment Date/Time:
+                Shipment Date:
                 <span id="shipment-date" class="text-primary"></span>
               </p>
             </div>
             <div class="w3-border-bottom w3-margin-top">
               <p class="no-margin-3 bold">
-                Expected arrival Date/Time:
+                Expected arrival Date:
                 <span id="arrival-date" class="text-primary"></span>
               </p>
             </div>
-            <div>
+            <div style="display: none;">
               <div class="w3-border-bottom w3-margin-top">
                 <p class="no-margin-3 bold w3-text-red">Sender Details</p>
               </div>
@@ -557,7 +496,7 @@
             </p>
           </div>
         </div>
-        <div class="card w3-margin-top w3-padding-16">
+        <div class="w3-margin-top w3-padding-16" style="display: none;">
           <div style="border-bottom: 1px solid rgb(14, 26, 143)">
             <p class="bold no-margin w3-padding-small text-primary">
               Shipment History

@@ -17,7 +17,7 @@ document.body.addEventListener("click", function (e) {
   } else if (targetId == "download") {
     let pdf = document.getElementById("pdf");
     let opt = {
-      filename: "GIA-COURIER Invoice.pdf",
+      filename: "FASTFLYPARCELS Invoice.pdf",
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 4 },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },

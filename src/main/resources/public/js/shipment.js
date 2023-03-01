@@ -1,20 +1,7 @@
-let shipmentStage = new URLSearchParams(window.location.search).get("stage");
-
-document.getElementById("snackbar").textContent = shipmentStage + " Shipments";
-
-if (shipmentStage == "received") {
-  getShipments("received");
-} else if (shipmentStage == "dispatched") {
-  getShipments("dispatched");
-} else if (shipmentStage == "middle-staged") {
-  getShipments("middle stage");
-} else if (shipmentStage == "delivered") {
-  getShipments("delivered");
-}
-
-function getShipments(shipmentStage) {
+getShipments();
+function getShipments() {
   let shipmentsXhr = new XMLHttpRequest();
-  shipmentsXhr.open("GET", `/shipment/stage/${shipmentStage}`, true);
+  shipmentsXhr.open("GET", `/shipments`, true);
   shipmentsXhr.send();
 
   shipmentsXhr.onreadystatechange = function () {
