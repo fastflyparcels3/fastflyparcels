@@ -1,5 +1,7 @@
 let selectedHistoryId;
 
+let shipmentStagesTemp = [];
+
 let hasShipmentId = new URLSearchParams(window.location.search).has(
   "shipmentid"
 );
@@ -150,15 +152,16 @@ function getShipment(shipmentId) {
       getStatuses(response.shipmentStatus.shipmentStatusId);
       document.getElementById("tracking-id").textContent = response.shipmentId;
 
-	  let status = "check";
-        response.shipmentStages.forEach(function (item, index) {
-          if (index == response.shipmentStages.length - 1) {
-            status = "local_shipping";
-          }
-          document.getElementById("shipment-stage-root").innerHTML +=
-            bindShipmentStage2(item, status);
-        });
-      
+      let status = "check";
+      response.shipmentStages.forEach(function (item, index) {
+        shipmentStagesTemp.push(item.shipmentStage);
+        if (index == response.shipmentStages.length - 1) {
+          status = "local_shipping";
+        }
+        document.getElementById("shipment-stage-root").innerHTML +=
+          bindShipmentStage2(item, status);
+      });
+
       countries.forEach(function (country) {
         let selected = "";
         if (country.countryId == response.senderAddress.countryId) {
@@ -260,7 +263,6 @@ document.body.addEventListener("click", function (e) {
   }
 });
 
-let shipmentStagesTemp = [];
 function addShipmentStage() {
   document.getElementById("shipment-stage-root").innerHTML = "";
   let shipmentStageEtx = document.getElementById("stage");
@@ -273,6 +275,7 @@ function addShipmentStage() {
     document.getElementById("shipment-stage-root").innerHTML +=
       bindShipmentStage(item, status);
   });
+  console.log(shipmentStagesTemp);
   closeModal("add-stage-modal");
 }
 
@@ -398,7 +401,7 @@ function addShipment() {
   let shipmentStages = [];
 
   shipmentStagesTemp.forEach(function (item) {
-    shipmentStages.push({ shipmentStageId: 0, shipmentStage: item })
+    shipmentStages.push({ shipmentStageId: 0, shipmentStage: item });
   });
 
   let shipment = {
@@ -406,7 +409,7 @@ function addShipment() {
     deliveryDate: arrivalDate,
     senderName: senderName,
     shipmentStatus: { shipmentStatusId: status },
-	shipmentStages: shipmentStages,
+    shipmentStages: shipmentStages,
     receiverPhone: receiverPhone,
     receiverEmail: receiverEmail,
     senderPhone: senderPhone,
@@ -458,15 +461,14 @@ function update() {
   let destination = document.getElementById("destination").value;
   let senderAddress = document.getElementById("sender-address").value;
   let depature = document.getElementById("depature").value;
+  let shipmentStages = [];
 
-  //	if (status == "moving") {
-  //		status = 2;
-  //	} else {
-  //		status = 1;
-  //	}
+  shipmentStagesTemp.forEach(function (item) {
+    shipmentStages.push({ shipmentStageId: 0, shipmentStage: item });
+  });
 
   let shipment = {
-    shipmentStage: { shipmentStageId: orderStage2 },
+    shipmentStages: shipmentStages,
     shipmentId: trackingId,
     shipmentDate: shipmentDate,
     deliveryDate: arrivalDate,
@@ -653,7 +655,7 @@ function bindShipmentStage(shipmentStage, status) {
 }
 
 function bindShipmentStage2(shipmentStage, status) {
-	return `<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  return `<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 	  <div class="background-primary" style="height: 20px; width: 1px;"></div>
 	  <p class="small no-margin-2">
 		${shipmentStage.shipmentStage}
@@ -672,7 +674,7 @@ function bindShipmentStage2(shipmentStage, status) {
 		</span>
 	  </div>
 	</div>`;
-  }
+}
 
 function stopSpinner() {
   document.getElementById("spinner").style.display = "none";
