@@ -261,7 +261,16 @@ document.body.addEventListener("click", function (e) {
   } else if (target.id == "add-stage") {
     addShipmentStage();
   }
+  else if(target.id == "reset-btn") {
+    resetShipmentStages();
+  }
 });
+
+function resetShipmentStages() {
+  shipmentStagesTemp = [];
+  console.log(shipmentStagesTemp);
+  document.getElementById("shipment-stage-root").innerHTML = "";
+}
 
 function addShipmentStage() {
   document.getElementById("shipment-stage-root").innerHTML = "";
